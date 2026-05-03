@@ -6,7 +6,7 @@ st.set_page_config(page_title="IVT Averager", page_icon=None, layout=None, initi
 st.title("IVT Data Averager")
 
 
-st.info("This automatically drops unused columns such as Date, Area, User,etc. It also formats it to only show the averaged rows.")
+st.info("This automatically drops unused columns such as Date, Area, User, etc. It also formats it to only show the averaged rows.")
 uploaded_file = st.file_uploader(label = "Upload file here", type=["csv"], accept_multiple_files=False)
 
 if uploaded_file:
