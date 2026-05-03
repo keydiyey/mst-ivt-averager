@@ -2,26 +2,27 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-
+st.set_page_config(page_title="IVT Averager", page_icon=None, layout=None, initial_sidebar_state=None, menu_items=None)
 st.title("IVT Data Averager")
 
-# 1. File Upload
-uploaded_file = st.file_uploader("Upload your Excel file", type=["csv"])
+
+st.info("This automatically drops unused columns such as Date, Area, User,etc. It also formats it to only show the averaged rows.")
+uploaded_file = st.file_uploader(type=["csv"])
 
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
     
-    # 2. Drop specific columns
-    # Use 'errors=ignore' so the app doesn't crash if a column name is missing
     cols_to_drop = ["Date", "Area(cm2)", "User", "Grading", "Device ID", "IR(A)" ]
     df = df.drop(columns=cols_to_drop, errors='ignore')
 
     group_id = (df["ID"] != df["ID"].shift()).cumsum()
 
     avg_df = df.groupby(group_id).agg({
-            "ID": 'first', # Keep the name
-            **{col: 'mean' for col in df.select_dtypes('number').columns} # Average numbers
+            "ID": 'first', 
+            **{col: 'mean' for col in df.select_dtypes('number').columns} 
         })
+    
+    avg_df = avg_df.sort_index(ascending=True)
 
     st.subheader("Averages")
     st.info("You can copy the cells directly to the spreadsheet but you can also download the csv file.")
