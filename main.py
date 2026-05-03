@@ -21,8 +21,8 @@ if uploaded_file:
             "ID": 'first', 
             **{col: 'mean' for col in df.select_dtypes('number').columns} 
         })
-    
-    avg_df = avg_df.sort_index(ascending=True)
+    avg_df = avg_df.rename(columns={"ID": 'Sample ID'})
+    avg_df = avg_df.sort_values(by="Sample ID")
 
     st.subheader("Averages")
     st.info("You can copy the cells directly to the spreadsheet but you can also download the csv file.")
