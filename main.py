@@ -1,0 +1,42 @@
+import streamlit as st
+import pandas as pd
+from datetime import datetime
+
+
+st.title("IVT Data Averager")
+
+# 1. File Upload
+uploaded_file = st.file_uploader("Upload your Excel file", type=["csv"])
+
+if uploaded_file:
+    df = pd.read_csv(uploaded_file)
+    
+    # 2. Drop specific columns
+    # Use 'errors=ignore' so the app doesn't crash if a column name is missing
+    cols_to_drop = ["Date", "Area(cm2)", "User", "Grading", "Device ID", "IR(A)" ]
+    df = df.drop(columns=cols_to_drop, errors='ignore')
+
+    group_id = (df["ID"] != df["ID"].shift()).cumsum()
+
+    avg_df = df.groupby(group_id).agg({
+            "ID": 'first', # Keep the name
+            **{col: 'mean' for col in df.select_dtypes('number').columns} # Average numbers
+        })
+
+    st.subheader("Averages")
+    st.info("You can copy the cells directly to the spreadsheet but you can also download the csv file.")
+    st.write(avg_df)
+    
+
+    
+    today = datetime.today()
+    csv = avg_df.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="Download Averages",
+        data=csv,
+        file_name=f"{today.strftime("%M%D%Y")}_averaged_IVT.excel",
+        mime="text/csv",
+)
+
+else:
+    st.info("Upload excel file first! :3")
