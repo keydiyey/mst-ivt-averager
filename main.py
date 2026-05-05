@@ -20,7 +20,7 @@ if uploaded_file:
     avg_df = df.groupby(group_id).agg({
             "ID": 'first', 
             **{col: 'mean' for col in df.select_dtypes('number').columns} 
-        })
+        }).round(4)
     avg_df = avg_df.rename(columns={"ID": 'Sample ID'})
     avg_df = avg_df.sort_values(by="Sample ID")
 
