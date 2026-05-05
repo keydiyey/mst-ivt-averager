@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-st.set_page_config(page_title="IVT Averager", page_icon=None, layout=None, initial_sidebar_state=None, menu_items=None)
+st.set_page_config(page_title="IVT Averager", page_icon=None, layout="wide", initial_sidebar_state=None, menu_items=None)
 st.title("IVT Data Averager")
 
 
@@ -26,7 +26,7 @@ if uploaded_file:
 
     st.subheader("Averages")
     st.info("You can copy the cells directly to the spreadsheet but you can also download the csv file.")
-    st.write(avg_df)
+    st.dataframe(avg_df, width="stretch")
     
 
     
