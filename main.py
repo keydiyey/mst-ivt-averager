@@ -7,11 +7,14 @@ st.title("IVT Data Averager")
 
 
 st.info("This automatically drops unused columns such as Date, Area, User, etc. It also formats it to only show the averaged rows.")
-uploaded_file = st.file_uploader(label = "Upload file here", type=["csv"], accept_multiple_files=False)
+uploaded_file = st.file_uploader(label = "Upload file here", type=["csv", "xlsx"], accept_multiple_files=False)
 
 if uploaded_file:
-    df = pd.read_csv(uploaded_file)
-    
+    if uploaded_file.type == "csv":
+        df = pd.read_csv(uploaded_file)
+    else:
+        df = pd.read_excel(uploaded_file) 
+           
     cols_to_drop = ["Date", "Area(cm2)", "User", "Grading", "Device ID", "IR(A)" ]
     df = df.drop(columns=cols_to_drop, errors='ignore')
 
