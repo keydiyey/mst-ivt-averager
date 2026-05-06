@@ -10,7 +10,7 @@ st.info("This automatically drops unused columns such as Date, Area, User, etc. 
 uploaded_file = st.file_uploader(label = "Upload file here", type=["csv", "xlsx"], accept_multiple_files=False)
 
 if uploaded_file:
-    if uploaded_file.type == "csv":
+    if uploaded_file.name.endswith('.csv'):
         df = pd.read_csv(uploaded_file)
     else:
         df = pd.read_excel(uploaded_file) 
