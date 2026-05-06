@@ -7,7 +7,7 @@ st.title("IVT Data Averager")
 
 
 st.info("This automatically drops unused columns such as Date, Area, User, etc. It also formats it to only show the averaged rows.")
-uploaded_file = st.file_uploader(label = "Upload file here", type=["csv", "xlsx"], accept_multiple_files=False)
+uploaded_file = st.file_uploader(label = "Upload file here", type=["csv", "xlsx", "xls"], accept_multiple_files=False)
 
 if uploaded_file:
     if uploaded_file.name.endswith('.csv'):
