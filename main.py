@@ -43,4 +43,4 @@ if uploaded_file:
 )
 
 else:
-    st.info("Upload excel file first! :3")
+    st.info("Upload excel file first.")
